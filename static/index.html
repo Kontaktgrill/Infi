@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <section class="panel" aria-label="Anmeldung oder Registrierung">
+      <div class="tabs" role="tablist" aria-label="Anmeldung oder Registrierung">
+        <button class="tab active" id="login-tab" role="tab" aria-selected="true">Anmelden</button>
+        <button class="tab" id="register-tab" role="tab" aria-selected="false">Registrieren</button>
+      </div>
+
+      <form id="auth-form">
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="E-Mail"
+          aria-label="E-Mail"
+          required
+        >
+
+        <input
+          id="password"
+          name="password"
+          type="password"
+          minlength="8"
+          autocomplete="current-password"
+          placeholder="Passwort"
+          aria-label="Passwort"
+          required
+        >
+
+        <button class="submit" type="submit" id="submit-button">Anmelden</button>
+      </form>
+      <p id="message" class="message" role="status"></p>
+    </section>
+
+    <section id="account" class="account hidden" aria-live="polite">
+      <h2 id="account-email"></h2>
+      <button class="logout" id="logout-button">Abmelden</button>
+    </section>
+  </main>
+</body>
+</html>
