@@ -4,12 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login</title>
-  <link rel="stylesheet" href="/styles.css">
-  <script src="/app.js" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=themes-3">
+  <script src="/app.js?v=login-email-1" defer></script>
 </head>
 <body>
   <main class="shell">
     <section class="panel" aria-label="Anmeldung oder Registrierung">
+      <div class="theme-picker">
+        <label for="theme-select">Design</label>
+        <select id="theme-select">
+          <option value="anime">Pink Anime</option>
+          <option value="business">Business Formal</option>
+          <option value="warhammer">Warhammer 40K</option>
+          <option value="steampunk">Steampunk</option>
+          <option value="eurotruck">Euro Truck Simulator</option>
+          <option value="warframe">Warframe</option>
+          <option value="anatomical">Anatomical</option>
+        </select>
+      </div>
       <div class="tabs" role="tablist" aria-label="Anmeldung oder Registrierung">
         <button class="tab active" id="login-tab" role="tab" aria-selected="true">Anmelden</button>
         <button class="tab" id="register-tab" role="tab" aria-selected="false">Registrieren</button>
@@ -38,6 +50,66 @@
         >
 
         <button class="submit" type="submit" id="submit-button">Anmelden</button>
+      </form>
+      <section id="email-verification-screen" class="email-verification hidden" aria-live="polite">
+        <div class="email-icon" aria-hidden="true">✉</div>
+        <h1>E-Mail bestätigen</h1>
+        <p>
+          Wir haben dir einen Bestätigungslink per E-Mail gesendet.
+          Bitte öffne die E-Mail und klicke auf den Link, um den Login fortzusetzen.
+        </p>
+        <p class="verification-email" id="verification-email"></p>
+        <p class="verification-waiting">Wir warten auf deine Bestätigung ...</p>
+        <button class="cancel-link" type="button" id="email-verification-cancel-button">
+          Zurück zur Anmeldung
+        </button>
+      </section>
+      <form id="otp-form" class="hidden">
+        <div id="totp-setup" class="totp-setup hidden">
+          <strong>Dein Authenticator-Schlüssel</strong>
+          <p>Füge diesen Schlüssel in Google Authenticator, Microsoft Authenticator oder Authy hinzu. Du brauchst ihn nur einmal:</p>
+          <code id="totp-secret"></code>
+          <p class="totp-uri" id="totp-uri"></p>
+        </div>
+        <label for="otp">Code aus der Authenticator-App</label>
+        <input
+          id="otp"
+          name="otp"
+          type="text"
+          inputmode="numeric"
+          pattern="[0-9]{6}"
+          maxlength="6"
+          autocomplete="one-time-code"
+          placeholder="123456"
+          required
+        >
+        <button class="submit" type="submit" id="otp-submit-button">
+          Code bestätigen
+        </button>
+        <button class="cancel-link" type="button" id="otp-cancel-button">
+          Zurück zur Anmeldung
+        </button>
+      </form>
+      <button class="reset-link" type="button" id="reset-request-button">
+        Passwort vergessen?
+      </button>
+
+      <form id="reset-request-form" class="hidden">
+        <label for="reset-email">E-Mail-Adresse für den Reset-Link</label>
+        <input
+          id="reset-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="E-Mail"
+          required
+        >
+        <button class="submit" type="submit" id="reset-submit-button">
+          Reset-Link senden
+        </button>
+        <button class="cancel-link" type="button" id="reset-cancel-button">
+          Zurück zur Anmeldung
+        </button>
       </form>
       <p id="message" class="message" role="status"></p>
     </section>

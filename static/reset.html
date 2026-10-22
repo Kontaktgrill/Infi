@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Passwort zurücksetzen</title>
+  <link rel="stylesheet" href="/styles.css?v=themes-2">
+  <script src="/reset.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <section class="panel" aria-label="Passwort zurücksetzen">
+      <h1>Passwort zurücksetzen</h1>
+      <form id="reset-form">
+        <input
+          id="password"
+          name="password"
+          type="password"
+          minlength="8"
+          autocomplete="new-password"
+          placeholder="Neues Passwort"
+          aria-label="Neues Passwort"
+          required
+        >
+        <input
+          id="password-confirmation"
+          name="password-confirmation"
+          type="password"
+          minlength="8"
+          autocomplete="new-password"
+          placeholder="Neues Passwort wiederholen"
+          aria-label="Neues Passwort wiederholen"
+          required
+        >
+        <button class="submit" type="submit" id="reset-submit-button">
+          Passwort speichern
+        </button>
+      </form>
+      <p id="message" class="message" role="status"></p>
+      <a class="cancel-link" href="/">Zurück zur Anmeldung</a>
+    </section>
+  </main>
+</body>
+</html>

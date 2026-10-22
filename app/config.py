@@ -12,10 +12,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATABASE = BASE_DIR / "users.db"
 STATIC_DIR = BASE_DIR / "static"
 HOST = "127.0.0.1"
-PORT = 8000
+PORT = 8020
 SESSION_LIFETIME = 60 * 60  # 1 Stunde in Sekunden
 
-APP_BASE_URL = "http://127.0.0.1:8000"
+APP_BASE_URL = "http://127.0.0.1:8020"
 EMAIL_FROM = "noreply@your-app.test"
 SMTP_HOST = "sandbox.smtp.mailtrap.io"
 SMTP_PORT = 2525

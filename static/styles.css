@@ -1,132 +1,780 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
-  --ink: #17221f;
-  --muted: #66736e;
-  --paper: #f4f1e8;
-  --panel: #fffdf7;
-  --accent: #e05a3f;
-  --line: #d8ddd3;
+  --pink: #ff5ca8;
+  --hot-pink: #e93383;
+  --purple: #8f5bff;
+  --ink: #442348;
+  --muted: #9a6d91;
+  --paper: #fff0fa;
+  --panel: rgba(255, 251, 255, 0.94);
+  --line: #f2c9e5;
+  --white: #fffaff;
+}
+
+body[data-theme="business"] {
+  --pink: #1c5687;
+  --hot-pink: #123c63;
+  --purple: #3c769f;
+  --ink: #172b3d;
+  --muted: #5f7282;
+  --line: #cbd8e3;
+  --white: #ffffff;
+  --panel: rgba(255, 255, 255, 0.97);
+  background: linear-gradient(135deg, #e9eff4, #c8d5df);
+  font-family: Arial, sans-serif;
+}
+
+body[data-theme="warhammer"] {
+  --pink: #b99a42;
+  --hot-pink: #d2b45b;
+  --purple: #695f3c;
+  --ink: #e5ddc4;
+  --muted: #b7ad8e;
+  --line: #665b3b;
+  --white: #e8dfc3;
+  --panel: rgba(27, 31, 27, 0.97);
+  background: radial-gradient(circle at 50% 0, #4c4936, #111512 70%);
+  font-family: Georgia, serif;
+}
+
+body[data-theme="steampunk"] {
+  --pink: #b86d32;
+  --hot-pink: #7f3e22;
+  --purple: #d09a54;
+  --ink: #3d271c;
+  --muted: #80644c;
+  --line: #c9a77b;
+  --white: #fff1d0;
+  --panel: rgba(255, 238, 201, 0.97);
+  background: linear-gradient(135deg, #3b3028, #9a6844);
+  font-family: Georgia, serif;
+}
+
+body[data-theme="eurotruck"] {
+  --pink: #f28b30;
+  --hot-pink: #d85e1d;
+  --purple: #29658a;
+  --ink: #17364a;
+  --muted: #668092;
+  --line: #b8ceda;
+  --white: #f8fbfc;
+  --panel: rgba(247, 251, 252, 0.97);
+  background:
+    linear-gradient(115deg, transparent 0 48%, rgba(255, 255, 255, 0.22) 49% 50%, transparent 51%),
+    repeating-linear-gradient(0deg, #17364a 0 8px, #214c64 8px 16px);
+  font-family: Arial, sans-serif;
+}
+
+body[data-theme="warframe"] {
+  --pink: #58c9c2;
+  --hot-pink: #b477ff;
+  --purple: #5143a6;
+  --ink: #e7e6f4;
+  --muted: #a9a7c8;
+  --line: #4c4a70;
+  --white: #f2f1ff;
+  --panel: rgba(22, 21, 43, 0.97);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(88, 201, 194, 0.18), transparent 28%),
+    linear-gradient(135deg, #0d1020, #292044 55%, #101c2b);
+  font-family: 'Nunito', sans-serif;
+}
+
+body[data-theme="anatomical"] {
+  --pink: #d98773;
+  --hot-pink: #a94f4d;
+  --purple: #bd6c63;
+  --ink: #4b2928;
+  --muted: #8a5b57;
+  --line: #e2aea0;
+  --white: #fff9f5;
+  --panel: rgba(255, 246, 239, 0.96);
+  background:
+    radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.5), transparent 28%),
+    linear-gradient(135deg, #f8cfc1, #eaa99f 52%, #cf807b);
+  font-family: 'Nunito', sans-serif;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  margin: 0;
+  position: relative;
   min-height: 100vh;
+  margin: 0;
   display: grid;
   place-items: center;
+  overflow-x: hidden;
   color: var(--ink);
-  background: linear-gradient(135deg, #f4f1e8, #dce6df);
-  font-family: 'DM Sans', sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.9) 0 3px, transparent 4px),
+    radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.85) 0 4px, transparent 5px),
+    radial-gradient(circle at 75% 78%, rgba(255, 255, 255, 0.7) 0 2px, transparent 3px),
+    linear-gradient(135deg, #ffd7ef 0%, #f3ddff 48%, #cddcff 100%);
+  background-size: 170px 170px, 230px 230px, 190px 190px, auto;
+  font-family: 'Nunito', sans-serif;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  z-index: -1;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Comfortaa', cursive;
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+body::before {
+  content: '✦';
+  top: 8%;
+  left: 8%;
+  transform: rotate(-15deg);
+}
+
+body::after {
+  content: '♡';
+  right: 8%;
+  bottom: 7%;
+  color: rgba(255, 92, 168, 0.34);
+  transform: rotate(15deg);
 }
 
 .shell {
-  width: min(100% - 32px, 420px);
+  width: min(100% - 32px, 440px);
   padding: 24px 0;
 }
 
 .panel,
 .account {
-  padding: 28px 24px;
+  padding: 32px 28px;
   background: var(--panel);
-  border: 1px solid rgba(23, 34, 31, 0.08);
-  box-shadow: 12px 16px 0 rgba(23, 34, 31, 0.08);
+  border: 3px solid var(--white);
+  border-radius: 28px;
+  box-shadow:
+    0 8px 0 rgba(229, 76, 155, 0.18),
+    0 18px 40px rgba(130, 73, 145, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.panel::before {
+  content: '♡  Welcome  ♡';
+  display: block;
+  margin-bottom: 18px;
+  color: var(--pink);
+  font-family: 'Comfortaa', cursive;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.theme-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.theme-picker label {
+  flex: 1;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.theme-picker select {
+  min-width: 145px;
+  padding: 8px 10px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
 }
 
 .tabs {
   display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid var(--line);
+  gap: 8px;
+  margin-bottom: 26px;
+  padding: 5px;
+  background: #ffe4f4;
+  border-radius: 16px;
 }
 
 .tab {
   flex: 1;
-  padding: 0 0 12px;
+  padding: 10px 8px;
   color: var(--muted);
-  background: none;
+  background: transparent;
   border: 0;
-  border-bottom: 2px solid transparent;
+  border-radius: 12px;
   font: inherit;
+  font-weight: 700;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
+.tab:hover,
 .tab.active {
-  color: var(--ink);
-  border-color: var(--accent);
-  font-weight: 700;
+  color: var(--hot-pink);
+  background: var(--white);
+  box-shadow: 0 3px 8px rgba(214, 72, 144, 0.14);
 }
 
 form {
   display: grid;
-  gap: 12px;
+  gap: 13px;
+}
+
+label {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
 }
 
 input {
   width: 100%;
-  padding: 12px 0;
+  padding: 13px 16px;
   color: var(--ink);
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--line);
+  background: #fff8fd;
+  border: 2px solid var(--line);
+  border-radius: 14px;
   outline: none;
   font: inherit;
+  transition: 0.2s ease;
 }
 
-input::placeholder {
-  color: var(--muted);
-}
+input::placeholder { color: #c69abb; }
 
 input:focus {
-  border-color: var(--accent);
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(255, 92, 168, 0.14);
 }
 
 .submit,
 .logout {
-  margin-top: 18px;
+  margin-top: 14px;
   padding: 14px 18px;
-  color: #fffdf7;
-  background: var(--ink);
+  color: var(--white);
+  background: linear-gradient(135deg, var(--pink), var(--purple));
   border: 0;
+  border-radius: 14px;
   font: inherit;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
+  box-shadow: 0 5px 0 rgba(187, 63, 137, 0.22);
+  transition: 0.2s ease;
 }
 
 .submit:hover,
 .logout:hover {
-  background: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 rgba(187, 63, 137, 0.22);
+}
+
+.submit:active,
+.logout:active { transform: translateY(1px); }
+
+.reset-link,
+.cancel-link {
+  display: block;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.reset-link {
+  width: 100%;
+  margin-top: 15px;
+  padding: 11px;
+  color: var(--hot-pink);
+  background: #fff0f9;
+  border: 2px dashed #f3a7d0;
+  border-radius: 13px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.reset-link:hover {
+  background: #ffe1f1;
+  border-color: var(--pink);
+}
+
+.cancel-link {
+  margin: 12px auto 0;
+  padding: 0;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  font-size: 0.88rem;
+}
+
+.cancel-link:hover { color: var(--hot-pink); }
+
+.panel h1 {
+  margin-top: 0;
+  color: var(--hot-pink);
+  font-family: 'Comfortaa', cursive;
+  font-size: 1.55rem;
+  text-align: center;
 }
 
 .submit:disabled {
   opacity: 0.55;
   cursor: wait;
+  transform: none;
 }
 
 .message {
   min-height: 20px;
-  margin: 14px 0 0;
+  margin: 17px 0 0;
   font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
 }
 
-.success { color: #27734f; }
-.error { color: #bd3d2d; }
+.email-verification {
+  padding: 10px 0 4px;
+  text-align: center;
+}
+
+.email-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  border-radius: 50%;
+  font-size: 1.8rem;
+  box-shadow: 0 5px 0 rgba(187, 63, 137, 0.18);
+}
+
+.email-verification h1 {
+  margin: 0 0 10px;
+  color: var(--hot-pink);
+  font-family: 'Comfortaa', cursive;
+  font-size: 1.35rem;
+}
+
+.email-verification p {
+  margin: 8px 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.verification-email {
+  color: var(--ink) !important;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.verification-waiting {
+  margin-top: 20px !important;
+  color: var(--hot-pink) !important;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.totp-setup {
+  padding: 13px;
+  color: var(--muted);
+  background: rgba(255, 240, 249, 0.7);
+  border: 1px dashed var(--pink);
+  border-radius: 10px;
+  font-size: 0.82rem;
+}
+
+.totp-setup strong {
+  color: var(--hot-pink);
+}
+
+.totp-setup p {
+  margin: 7px 0;
+}
+
+.totp-setup code {
+  display: block;
+  padding: 8px;
+  color: var(--ink);
+  background: var(--panel);
+  border-radius: 6px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-align: center;
+  word-break: break-all;
+}
+
+.totp-uri {
+  max-height: 48px;
+  overflow: auto;
+  font-size: 0.68rem;
+  word-break: break-all;
+}
+
+.success { color: #2c9b72; }
+.error { color: #d33d73; }
 .hidden { display: none; }
 
 .account {
   margin-top: 20px;
+  text-align: center;
 }
 
 .account h2 {
   margin: 0;
-  font-size: 1.3rem;
-  text-align: center;
+  color: var(--hot-pink);
+  font-family: 'Comfortaa', cursive;
+  font-size: 1.25rem;
+}
+
+body[data-theme="business"] .panel,
+body[data-theme="business"] .account {
+  border-radius: 6px;
+  box-shadow: 0 10px 24px rgba(34, 60, 80, 0.2);
+}
+
+body[data-theme="business"] .panel::before {
+  content: 'SECURE ACCESS';
+  color: var(--hot-pink);
+  font-family: Arial, sans-serif;
+}
+
+body[data-theme="business"]::before,
+body[data-theme="business"]::after {
+  content: '';
+}
+
+body[data-theme="business"] .tabs {
+  background: #e8eef3;
+  border-radius: 4px;
+}
+
+body[data-theme="business"] .tab:hover,
+body[data-theme="business"] .tab.active {
+  color: var(--hot-pink);
+  border-radius: 4px;
+}
+
+body[data-theme="business"] .reset-link {
+  color: var(--hot-pink);
+  background: #f3f6f8;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+body[data-theme="warhammer"] .panel,
+body[data-theme="warhammer"] .account {
+  border: 2px solid var(--pink);
+  border-radius: 3px;
+  box-shadow: 0 0 0 5px rgba(185, 154, 66, 0.12), 0 14px 30px #000;
+}
+
+body[data-theme="warhammer"] .panel::before {
+  content: '✠  EMPORER PROTECTS  ✠';
+  color: var(--hot-pink);
+  font-family: Georgia, serif;
+}
+
+body[data-theme="warhammer"] .tabs {
+  background: #292d25;
+  border: 1px solid var(--line);
+}
+
+body[data-theme="warhammer"]::before {
+  content: '✠';
+  color: rgba(185, 154, 66, 0.45);
+}
+
+body[data-theme="warhammer"]::after {
+  content: '⚔';
+  color: rgba(185, 154, 66, 0.45);
+}
+
+body[data-theme="steampunk"] .panel,
+body[data-theme="steampunk"] .account {
+  border: 3px double var(--hot-pink);
+  border-radius: 8px;
+  box-shadow: 8px 8px 0 rgba(48, 25, 14, 0.35);
+}
+
+body[data-theme="steampunk"] .panel::before {
+  content: '⚙  BRASS TERMINAL  ⚙';
+  color: var(--hot-pink);
+  font-family: Georgia, serif;
+}
+
+body[data-theme="steampunk"]::before {
+  content: '⚙';
+  color: rgba(255, 220, 153, 0.45);
+}
+
+body[data-theme="steampunk"]::after {
+  content: '⚙';
+  color: rgba(255, 220, 153, 0.45);
+}
+
+body[data-theme="eurotruck"] .panel,
+body[data-theme="eurotruck"] .account {
+  border: 3px solid #f28b30;
+  border-radius: 8px;
+  box-shadow: 0 8px 0 #0c2635, 0 18px 35px rgba(4, 17, 25, 0.45);
+}
+
+body[data-theme="eurotruck"] .panel::before {
+  content: 'ROAD LOG  •  NIGHT HAUL';
+  color: var(--hot-pink);
+  font-family: Arial, sans-serif;
+}
+
+body[data-theme="eurotruck"]::before {
+  content: '⚠';
+  color: rgba(242, 139, 48, 0.65);
+}
+
+body[data-theme="eurotruck"]::after {
+  content: '▰  ▰  ▰';
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 2.5rem;
+}
+
+body[data-theme="warframe"] .panel,
+body[data-theme="warframe"] .account {
+  border: 1px solid #58c9c2;
+  border-radius: 16px 4px 16px 4px;
+  box-shadow: 0 0 24px rgba(88, 201, 194, 0.2), 0 18px 45px #080912;
+}
+
+body[data-theme="warframe"] .panel::before {
+  content: '✦  ORBITER SYSTEM  ✦';
+  color: var(--pink);
+  font-family: 'Nunito', sans-serif;
+}
+
+body[data-theme="warframe"]::before {
+  content: '◇';
+  color: rgba(88, 201, 194, 0.48);
+}
+
+body[data-theme="warframe"]::after {
+  content: '△';
+  color: rgba(180, 119, 255, 0.5);
+}
+
+body[data-theme="anatomical"] .shell {
+  position: relative;
+  width: min(100% - 32px, 390px);
+  padding-top: 78px;
+}
+
+body[data-theme="anatomical"] .shell::before,
+body[data-theme="anatomical"] .shell::after {
+  position: absolute;
+  z-index: -1;
+  bottom: -30px;
+  width: 150px;
+  height: 105px;
+  content: '';
+  background: linear-gradient(145deg, #efb09f, #c76f6d);
+  border: 5px solid rgba(255, 249, 245, 0.85);
+  border-radius: 50%;
+  box-shadow: 0 14px 25px rgba(139, 67, 64, 0.2);
+}
+
+body[data-theme="anatomical"] .shell::before {
+  left: 50%;
+  transform: translateX(-96%);
+}
+
+body[data-theme="anatomical"] .shell::after {
+  right: 50%;
+  transform: translateX(96%);
+}
+
+body[data-theme="anatomical"] .panel,
+body[data-theme="anatomical"] .account {
+  position: relative;
+  z-index: 1;
+  border: 5px solid rgba(255, 249, 245, 0.9);
+  border-radius: 46% 46% 20px 20px / 86px 86px 20px 20px;
+  box-shadow: 0 12px 0 rgba(169, 79, 77, 0.18), 0 24px 42px rgba(139, 67, 64, 0.22);
+}
+
+body[data-theme="anatomical"] .panel::before {
+  content: 'WELCOME';
+  color: var(--hot-pink);
+  font-family: 'Comfortaa', cursive;
+}
+
+body[data-theme="anatomical"] .tabs {
+  background: #f6d5ca;
+}
+
+body[data-theme="anatomical"] .tab:hover,
+body[data-theme="anatomical"] .tab.active {
+  color: var(--hot-pink);
+  background: var(--white);
+}
+
+body[data-theme="anatomical"] input {
+  background: #fff8f4;
+}
+
+body[data-theme="anatomical"] .submit,
+body[data-theme="anatomical"] .logout {
+  background: linear-gradient(135deg, #d98773, #a94f4d);
+  box-shadow: 0 5px 0 rgba(139, 67, 64, 0.24);
+}
+
+/* Theme-specific controls override the shared anime defaults above. */
+body[data-theme="business"] input {
+  background: #f8fafc;
+  border-color: #b9c9d6;
+}
+
+body[data-theme="business"] .submit,
+body[data-theme="business"] .logout {
+  color: #fff;
+  background: #174d78;
+  border-radius: 4px;
+  box-shadow: 0 3px 0 #0c304d;
+}
+
+body[data-theme="business"] .reset-link {
+  color: #174d78;
+  background: #f8fafc;
+  border: 1px solid #b9c9d6;
+  border-radius: 4px;
+}
+
+body[data-theme="business"] .tab.active {
+  color: #174d78;
+  background: #fff;
+  border-radius: 4px;
+}
+
+body[data-theme="warhammer"] input {
+  color: #e5ddc4;
+  background: #1d211d;
+  border-color: #85713d;
+  border-radius: 3px;
+}
+
+body[data-theme="warhammer"] input::placeholder {
+  color: #9f956f;
+}
+
+body[data-theme="warhammer"] .submit,
+body[data-theme="warhammer"] .logout {
+  color: #171a16;
+  background: #b99a42;
+  border-radius: 3px;
+  box-shadow: 0 3px 0 #665324;
+}
+
+body[data-theme="warhammer"] .reset-link {
+  color: #d2b45b;
+  background: #242820;
+  border: 1px solid #85713d;
+  border-radius: 3px;
+}
+
+body[data-theme="warhammer"] .tab.active {
+  color: #171a16;
+  background: #b99a42;
+  border-radius: 3px;
+}
+
+body[data-theme="steampunk"] input {
+  background: #fff1d0;
+  border-color: #b98c5c;
+  border-radius: 5px;
+}
+
+body[data-theme="steampunk"] .submit,
+body[data-theme="steampunk"] .logout {
+  color: #fff1d0;
+  background: #7f3e22;
+  border-radius: 5px;
+  box-shadow: 0 3px 0 #4e2718;
+}
+
+body[data-theme="steampunk"] .reset-link {
+  color: #7f3e22;
+  background: #f8dcae;
+  border: 1px solid #b98c5c;
+  border-radius: 5px;
+}
+
+body[data-theme="steampunk"] .tab.active {
+  color: #7f3e22;
+  background: #ffe7bb;
+  border-radius: 5px;
+}
+
+body[data-theme="eurotruck"] input {
+  background: #f7fbfd;
+  border-color: #9dbbc9;
+  border-radius: 6px;
+}
+
+body[data-theme="eurotruck"] .submit,
+body[data-theme="eurotruck"] .logout {
+  color: #fff;
+  background: linear-gradient(135deg, #e87522, #b8441e);
+  border-radius: 6px;
+  box-shadow: 0 4px 0 #7b3019;
+}
+
+body[data-theme="eurotruck"] .reset-link {
+  color: #1d5875;
+  background: #e9f2f6;
+  border: 1px solid #9dbbc9;
+  border-radius: 6px;
+}
+
+body[data-theme="eurotruck"] .tab.active {
+  color: #fff;
+  background: #29658a;
+  border-radius: 6px;
+}
+
+body[data-theme="warframe"] input {
+  color: #e7e6f4;
+  background: #17172d;
+  border-color: #514f7b;
+  border-radius: 8px 3px 8px 3px;
+}
+
+body[data-theme="warframe"] input::placeholder {
+  color: #8986ac;
+}
+
+body[data-theme="warframe"] .submit,
+body[data-theme="warframe"] .logout {
+  color: #111326;
+  background: linear-gradient(135deg, #58c9c2, #b477ff);
+  border-radius: 8px 3px 8px 3px;
+  box-shadow: 0 4px 0 #363067;
+}
+
+body[data-theme="warframe"] .reset-link {
+  color: #58c9c2;
+  background: #1b1b35;
+  border: 1px solid #514f7b;
+  border-radius: 8px 3px 8px 3px;
+}
+
+body[data-theme="warframe"] .tab.active {
+  color: #111326;
+  background: #58c9c2;
+  border-radius: 8px 3px 8px 3px;
 }
 
 @media (max-width: 420px) {
   .panel,
-  .account {
-    padding: 22px 18px;
-  }
+  .account { padding: 26px 20px; }
 }
