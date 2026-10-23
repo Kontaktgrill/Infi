@@ -42,6 +42,14 @@ let emailChallengeToken = "";
 let emailConfirmationTimer = null;
 let registerMode = false;
 
+async function hashPassword(password) {
+  const encoded = new TextEncoder().encode(password);
+  const digest = await crypto.subtle.digest("SHA-256", encoded);
+  return Array.from(new Uint8Array(digest), (byte) =>
+    byte.toString(16).padStart(2, "0")
+  ).join("");
+}
+
 function setHidden(element, hidden) {
   element.classList.toggle("hidden", hidden);
 }
@@ -175,6 +183,7 @@ async function handleSubmit(event) {
 
   const data = Object.fromEntries(new FormData(form));
   try {
+    data.password = await hashPassword(data.password);
     const result = await request(registerMode ? "/api/register" : "/api/login", data);
     showMessage(result.message);
     if (!registerMode && result.email_confirmation_required) {

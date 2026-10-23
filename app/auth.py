@@ -19,8 +19,10 @@ def hash_password(password: str, salt: Optional[bytes] = None) -> str:
 
 
 def verify_password(password: str, stored_hash: str) -> bool:
-    """Prüft ein Passwort gegen einen gespeicherten scrypt-Hash."""
+    """Prüft einen Client-Hash oder einen älteren scrypt-Hash."""
     try:
+        if not stored_hash.startswith("scrypt$"):
+            return secrets.compare_digest(password, stored_hash)
         algorithm, salt_hex, hash_hex = stored_hash.split("$", 2)
         if algorithm != "scrypt":
             return False

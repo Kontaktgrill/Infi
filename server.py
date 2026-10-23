@@ -10,6 +10,7 @@ Welche Args nimmt er:
 """
 
 import http.server
+import re
 import json
 import smtplib
 import sqlite3
@@ -21,7 +22,6 @@ from app.auth import (
     create_session,
     delete_session,
     find_active_session,
-    hash_password,
     verify_password,
 )
 from app.config import HOST, PORT, SESSION_LIFETIME, STATIC_DIR
@@ -63,6 +63,11 @@ def is_valid_email(email: str) -> bool:
         return False
     local_part, domain = email.split("@")
     return bool(local_part and domain and "." in domain)
+
+
+def is_client_password_hash(value: str) -> bool:
+    """Prüft das Format eines vom Browser erzeugten SHA-256-Hashes."""
+    return bool(re.fullmatch(r"[0-9a-f]{64}", value))
 
 
 def send_json(
@@ -211,11 +216,11 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         """Prüft Registrierungsdaten, legt den Benutzer an und versendet den Link."""
         data = self.read_json()
         email = self.get_text(data, "email").strip().lower()
-        password = self.get_text(data, "password")
+        password_hash = self.get_text(data, "password")
         if not is_valid_email(email):
             self.send_error_json(400, "Bitte eine gültige E-Mail-Adresse eingeben.")
             return
-        if len(password) < 8:
+        if not is_client_password_hash(password_hash):
             self.send_error_json(400, "Das Passwort muss mindestens 8 Zeichen haben.")
             return
 
@@ -225,7 +230,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
                     "INSERT INTO users "
                     "(email, password_hash, created_at, email_verified, totp_secret) "
                     "VALUES (?, ?, strftime('%s', 'now'), 0, ?)",
-                    (email, hash_password(password), generate_totp_secret()),
+                    (email, password_hash, generate_totp_secret()),
                 )
         except sqlite3.IntegrityError:
             self.send_error_json(409, "Diese E-Mail-Adresse ist bereits registriert.")
@@ -407,14 +412,14 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         """Prüft den Reset-Link und aktualisiert das Passwort einmalig."""
         data = self.read_json()
         token = data.get("token", "") if data else ""
-        password = data.get("password", "") if data else ""
-        if not isinstance(token, str) or not isinstance(password, str):
+        password_hash = data.get("password", "") if data else ""
+        if not isinstance(token, str) or not isinstance(password_hash, str):
             self.send_error_json(400, "Ungültige Reset-Daten.")
             return
-        if len(password) < 8:
+        if not is_client_password_hash(password_hash):
             self.send_error_json(400, "Das Passwort muss mindestens 8 Zeichen haben.")
             return
-        if not consume_reset_token(token, hash_password(password)):
+        if not consume_reset_token(token, password_hash):
             self.send_error_json(400, "Der Reset-Link ist ungültig oder abgelaufen.")
             return
         send_json(

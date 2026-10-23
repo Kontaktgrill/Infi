@@ -24,6 +24,14 @@ function showMessage(text, isError = false) {
   message.className = `message ${isError ? "error" : "success"}`;
 }
 
+async function hashPassword(password) {
+  const encoded = new TextEncoder().encode(password);
+  const digest = await crypto.subtle.digest("SHA-256", encoded);
+  return Array.from(new Uint8Array(digest), (byte) =>
+    byte.toString(16).padStart(2, "0")
+  ).join("");
+}
+
 async function handleSubmit(event) {
   event.preventDefault();
   if (!token) {
@@ -37,10 +45,11 @@ async function handleSubmit(event) {
 
   submitButton.disabled = true;
   try {
+    const passwordHash = await hashPassword(password.value);
     const response = await fetch("/api/reset-password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, password: password.value })
+      body: JSON.stringify({ token, password: passwordHash })
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Etwas ist schiefgelaufen.");
