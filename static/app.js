@@ -28,7 +28,7 @@ const emailVerificationCancelButton = document.querySelector(
 );
 
 const THEMES = [
-  "anime",
+  //"anime",
   "business",
   "warhammer",
   "steampunk",
@@ -36,7 +36,7 @@ const THEMES = [
   "warframe",
   "anatomical"
 ];
-const DEFAULT_THEME = "anime";
+const DEFAULT_THEME = "business";
 let otpChallengeToken = "";
 let emailChallengeToken = "";
 let emailConfirmationTimer = null;
