@@ -9,6 +9,7 @@ import time
 from email.message import EmailMessage
 from urllib.parse import quote
 
+from .auth import hash_password
 from .config import (
     APP_BASE_URL,
     EMAIL_FROM,
@@ -48,7 +49,7 @@ def store_reset_token(email: str, token: str) -> int:
     return expires_at
 
 
-def consume_reset_token(token: str, password_hash: str) -> bool:
+def consume_reset_token(token: str, password: str) -> bool:
     """Ändert das Passwort und verbraucht ein gültiges Token."""
     now = int(time.time())
     with get_connection() as connection:
@@ -61,7 +62,7 @@ def consume_reset_token(token: str, password_hash: str) -> bool:
             return False
         connection.execute(
             "UPDATE users SET password_hash = ? WHERE email = ?",
-            (password_hash, row["email"]),
+            (hash_password(password), row["email"]),
         )
         connection.execute(
             "DELETE FROM password_reset_tokens WHERE token_hash = ?",

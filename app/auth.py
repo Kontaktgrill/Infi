@@ -1,6 +1,7 @@
 """Sicherheitsrelevante Funktionen für Passwort-Hashing und Session-Management."""
 
 import hashlib
+import re
 import secrets
 import time
 from typing import Optional
@@ -19,10 +20,13 @@ def hash_password(password: str, salt: Optional[bytes] = None) -> str:
 
 
 def verify_password(password: str, stored_hash: str) -> bool:
-    """Prüft einen Client-Hash oder einen älteren scrypt-Hash."""
+    """Prüft einen scrypt-Hash oder migriert einen alten Client-Hash."""
     try:
         if not stored_hash.startswith("scrypt$"):
-            return secrets.compare_digest(password, stored_hash)
+            if not re.fullmatch(r"[0-9a-f]{64}", stored_hash):
+                return False
+            legacy_hash = hashlib.sha256(password.encode("utf-8")).hexdigest()
+            return secrets.compare_digest(legacy_hash, stored_hash)
         algorithm, salt_hex, hash_hex = stored_hash.split("$", 2)
         if algorithm != "scrypt":
             return False
@@ -32,6 +36,11 @@ def verify_password(password: str, stored_hash: str) -> bool:
         return secrets.compare_digest(calculated_hash, hash_hex)
     except (ValueError, TypeError):
         return False
+
+
+def is_scrypt_hash(value: str) -> bool:
+    """Prüft, ob ein gespeicherter Passwortwert bereits scrypt verwendet."""
+    return value.startswith("scrypt$")
 
 
 def hash_session_token(token: str) -> str:
